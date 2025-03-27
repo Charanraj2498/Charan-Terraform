@@ -1,57 +1,23 @@
 pipeline {
     agent any
 
-    environment {
-        AWS_ACCESS_KEY_ID = credentials('AWS_ACCESS_KEY_ID') // Use Jenkins credentials ID
-        AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
-    }
-
     stages {
-        stage('Clone Repository') {
+        stage('Clone Repo') {
             steps {
-                git 'pipeline {
-    agent any
-
-    environment {
-        AWS_ACCESS_KEY_ID = credentials('AWS_ACCESS_KEY_ID') // Use Jenkins credentials ID
-        AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
-    }
-
-    stages {
-        stage('Clone Repository') {
-            steps {
-                git 'pipeline {
-    agent any
-
-    environment {
-        AWS_ACCESS_KEY_ID = credentials('AWS_ACCESS_KEY_ID') // Use Jenkins credentials ID
-        AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
-    }
-
-    stages {
-        stage('Clone Repository') {
-            steps {
-                git 'https://github.com/Charanraj2498/Charan-Terraform.git'
+                git branch: 'main', url: 'https://github.com/Charanraj2498/Charan-Terraform.git'
             }
         }
 
-        stage('Initialize Terraform') {
+        stage('Terraform Init') {
             steps {
                 sh 'terraform init'
             }
         }
 
-        stage('Plan Terraform') {
+        stage('Terraform Apply') {
             steps {
-                sh 'terraform plan -out=tfplan'
-            }
-        }
-
-        stage('Apply Terraform') {
-            steps {
-                sh 'terraform apply -auto-approve tfplan'
+                sh 'terraform apply -auto-approve'
             }
         }
     }
 }
-
